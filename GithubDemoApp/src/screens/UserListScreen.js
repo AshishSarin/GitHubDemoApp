@@ -17,7 +17,7 @@ class UserListScreen extends Component {
     }
 
     componentWillMount() {
-        // this.props.loadUserList();
+        this.props.loadUserList();
     }
 
     render() {
@@ -51,7 +51,7 @@ class UserListScreen extends Component {
                     let userItem = dataItem.item;
                     return (
                         <UserListItem
-                            onPressUserItem={() => { this.onPressUserItem() }}
+                            onPressUserItem={this.onPressUserItem.bind(this, userItem.login)}
                             userItem={userItem} />
                     );
                 }}
@@ -106,11 +106,10 @@ class UserListScreen extends Component {
         )
     }
 
-    onPressUserItem(userItemUrl) {
-        console.warn('pressed')
+    onPressUserItem(username) {
         const { navigate } = this.props.navigation;
         navigate('UserDetail', {
-            userItemUrl: userItemUrl
+            username: username
         });
 
     }
