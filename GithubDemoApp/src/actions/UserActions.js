@@ -1,6 +1,19 @@
-import { LOAD_USER_LIST, LOAD_USER_LIST_SUCCESS, LOAD_USER_LIST_FAIL, SEARCH_USER, SEARCH_USER_SUCCESS, SEARCH_USER_FAIL, LOAD_USER_DETAIL, LOAD_USER_DETAIL_SUCCESS, LOAD_REPO_LIST, LOAD_REPO_LIST_FAIL, LOAD_REPO_LIST_SUCCESS, LOAD_GIST_LIST, LOAD_GIST_LIST_FAIL, LOAD_GIST_LIST_SUCCESS } from "./types";
-import { fetchUserListApi, searchUserApi, fetchUserDetailApi, fetchRepoListApi, fetchGistListApi } from "../api/GithubUserApi";
-
+import {
+    LOAD_USER_LIST, LOAD_USER_LIST_SUCCESS, LOAD_USER_LIST_FAIL,
+    SEARCH_USER, SEARCH_USER_SUCCESS, SEARCH_USER_FAIL,
+    LOAD_USER_DETAIL, LOAD_USER_DETAIL_SUCCESS, LOAD_REPO_LIST,
+    LOAD_REPO_LIST_FAIL, LOAD_REPO_LIST_SUCCESS, LOAD_GIST_LIST,
+    LOAD_GIST_LIST_FAIL, LOAD_GIST_LIST_SUCCESS
+} from "./types";
+import {
+    fetchUserListApi, searchUserApi, fetchUserDetailApi,
+    fetchRepoListApi, fetchGistListApi
+} from "../api/GithubUserApi";
+import {
+    ERROR_LOADING_REPO_LIST, ERROR_LOADING_USER_LIST,
+    ERROR_LOADING_USER_DETAIL, ERROR_LOADING_GIST_LIST,
+    ERROR_SEARCH_USER
+} from '../values/strings';
 
 export const loadUserList = () => {
     return (dispatch) => {
@@ -12,12 +25,12 @@ export const loadUserList = () => {
 
                     dispatch({ type: LOAD_USER_LIST_SUCCESS, payload: userList });
                 } else {
-                    loadUserListFail(dispatch, "Error in loading user list")
+                    loadUserListFail(dispatch, ERROR_LOADING_USER_LIST)
                 }
             })
             .catch(error => {
                 console.log(error);
-                loadUserListFail(dispatch, "Error in loading user list");
+                loadUserListFail(dispatch, ERROR_LOADING_USER_LIST);
             })
     }
 }
@@ -31,12 +44,12 @@ export const searchUser = (searchInput) => {
 
                     dispatch({ type: SEARCH_USER_SUCCESS, payload: userList });
                 } else {
-                    searchUserFail(dispatch, "Error in searching user")
+                    searchUserFail(dispatch, ERROR_SEARCH_USER)
                 }
             })
             .catch(error => {
                 console.log(error);
-                searchUserFail(dispatch, "Error in searching user");
+                searchUserFail(dispatch, ERROR_SEARCH_USER);
             })
     }
 }
@@ -49,12 +62,12 @@ export const loadUserDetail = (username) => {
                 if (userDetailData) {
                     dispatch({ type: LOAD_USER_DETAIL_SUCCESS, payload: userDetailData });
                 } else {
-                    loadUserDetailFail(dispatch, 'Error in loading user details');
+                    loadUserDetailFail(dispatch, ERROR_LOADING_USER_DETAIL);
                 }
             })
             .catch(error => {
                 console.log(error);
-                loadUserDetailFail(dispatch, 'Error in loading user details');
+                loadUserDetailFail(dispatch, ERROR_LOADING_USER_DETAIL);
             })
     }
 }
@@ -67,12 +80,12 @@ export const loadRepoList = (username) => {
                 if (repoList) {
                     dispatch({ type: LOAD_REPO_LIST_SUCCESS, payload: repoList });
                 } else {
-                    loadRepoListFail(dispatch, "Error in loading repo list");
+                    loadRepoListFail(dispatch, ERROR_LOADING_REPO_LIST);
                 }
             })
             .catch(error => {
                 console.log(error);
-                loadRepoListFail(dispatch, "Error in loading repo list");
+                loadRepoListFail(dispatch, ERROR_LOADING_REPO_LIST);
             })
     }
 }
@@ -86,12 +99,12 @@ export const loadGistList = (username) => {
                 if (gistList) {
                     dispatch({ type: LOAD_GIST_LIST_SUCCESS, payload: gistList });
                 } else {
-                    loadGistListFail(dispatch, "Error in loading gist list");
+                    loadGistListFail(dispatch, ERROR_LOADING_GIST_LIST);
                 }
             })
             .catch(error => {
                 console.log(error);
-                loadGistListFail(dispatch, "Error in loading gist list");
+                loadGistListFail(dispatch, ERROR_LOADING_GIST_LIST);
             })
     }
 }

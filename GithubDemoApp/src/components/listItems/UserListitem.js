@@ -13,10 +13,14 @@ export default class UserListItem extends Component {
                     backgroundColor: '#f0f0f0', alignItems: 'center'
                 }}>
                 <Image
-                    style={{ height: 50, width: 50, borderRadius: 25 }}
+                    style={{ height: 40, width: 40, borderRadius: 20 }}
                     source={{ uri: userItem.avatar_url }}
                 />
-                <Text style={{ marginLeft: 12 }}>{userItem.login}</Text>
+                <Text style={{ marginLeft: 12, flex: 1, fontSize: 16, color: 'black' }}>{userItem.login}</Text>
+                <Image
+                    style={{ height: 25, width: 25 }}
+                    source={require('../../images/icon_forward.png')}
+                />
             </TouchableOpacity>
         )
     }

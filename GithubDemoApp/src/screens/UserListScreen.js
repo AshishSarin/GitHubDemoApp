@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {
-    View, Text, StyleSheet, TextInput,
+    View, Text, StyleSheet, TextInput, ScrollView,
     FlatList, ActivityIndicator, TouchableOpacity, Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import { loadUserList, searchUser } from '../actions';
 import { UserListItem } from '../components/listItems';
+import { LOADING_MSG_USER_LIST, ERROR_LOADING_USER_DETAIL, ERROR_LOADING_USER_LIST } from '../values/strings';
 
 class UserListScreen extends Component {
 
@@ -22,7 +23,7 @@ class UserListScreen extends Component {
 
     render() {
         return (
-            <View style={{ backgroundColor: '#f0f0f0' }}>
+            <View style={{ backgroundColor: '#f0f0f0', flex: 1 }}>
                 {this.renderSearchInput()}
                 {this.renderUserList()}
             </View>
@@ -40,30 +41,59 @@ class UserListScreen extends Component {
         if (this.props.isLoadingUserList) {
             return this.renderUserLoadingIndicator()
         }
-        return (
-            <FlatList
-                data={this.props.userList}
-                keyExtractor={(dataItem, index) => {
-                    return dataItem.login;
-                }}
-                ItemSeparatorComponent={this.renderSeparator}
-                renderItem={dataItem => {
-                    let userItem = dataItem.item;
-                    return (
-                        <UserListItem
-                            onPressUserItem={this.onPressUserItem.bind(this, userItem.login)}
-                            userItem={userItem} />
-                    );
-                }}
-            />
-        );
+        if (this.props.userList) {
+            if (this.props.userList.length > 0) {
+                return (
+                    <FlatList
+                        style={{ flex: 1 }}
+                        data={this.props.userList}
+                        keyExtractor={(dataItem, index) => {
+                            return dataItem.login;
+                        }}
+                        ItemSeparatorComponent={this.renderSeparator}
+                        renderItem={dataItem => {
+                            let userItem = dataItem.item;
+                            return (
+                                <UserListItem
+                                    onPressUserItem={this.onPressUserItem.bind(this, userItem.login)}
+                                    userItem={userItem} />
+                            );
+                        }}
+                    />
+                );
+            } else {
+                return (
+                    <Text style={{
+                        flex: 1, justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        {ERROR_LOADING_USER_LIST}
+                    </Text>
+                )
+            }
+        } else {
+            return (
+                <Text style={{
+                    flex: 1, justifyContent: 'center',
+                    alignItems: 'center'
+                }}>
+                    {ERROR_LOADING_USER_LIST}
+                </Text>
+            )
+        }
     }
 
     renderSearchInput() {
         return (
-            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{
+                flexDirection: 'row', justifyContent: 'center',
+                alignItems: 'center', backgroundColor: 'white',
+                paddingTop: 24, paddingBottom: 24
+            }}>
                 <TextInput
                     onSubmitEditing={this.onPressUserSearch.bind(this)}
+                    placeholder={"Search User"}
+                    placeholderTextColor={'grey'}
                     returnKeyType="search"
                     onChangeText={(text) => {
                         if (!text) {
@@ -73,13 +103,21 @@ class UserListScreen extends Component {
 
                     }}
                     style={{
-                        width: "66%", borderWidth: 2,
-                        borderColor: 'black', borderRadius: 15
+                        width: "66%", borderWidth: 2, height: 50, paddingHorizontal: 12,
+                        borderColor: 'grey', borderTopLeftRadius: 15, borderBottomLeftRadius: 15
                     }} />
                 <TouchableOpacity
+                    style={{
+                        backgroundColor: 'grey', height: 50, width: 50,
+                        justifyContent: 'center', alignItems: 'center', marginLeft: -1,
+                        borderTopRightRadius: 15, borderBottomRightRadius: 15
+                    }}
                     onPress={this.onPressUserSearch.bind(this)}
                 >
-                    <Text>Search</Text>
+                    <Image
+                        style={{ height: 30, width: 30 }}
+                        source={require('../images/icon_search.png')}
+                    />
                 </TouchableOpacity>
             </View>
         )
@@ -91,7 +129,7 @@ class UserListScreen extends Component {
                 style={{
                     height: 1,
                     backgroundColor: "#CED0CE",
-                    marginLeft: 86
+                    marginLeft: 0
                 }}
             />
         );
@@ -99,9 +137,9 @@ class UserListScreen extends Component {
 
     renderUserLoadingIndicator() {
         return (
-            <View style={{ alignItems: 'center' }}>
+            <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
                 <ActivityIndicator />
-                <Text>Loading users. Please wait...</Text>
+                <Text>{LOADING_MSG_USER_LIST}</Text>
             </View>
         )
     }
@@ -115,15 +153,14 @@ class UserListScreen extends Component {
     }
 
     onPressUserSearch() {
-        console.warn('Search User', this.state.userSearchInput);
         this.props.searchUser(this.state.userSearchInput);
     }
 }
 
 const mapStateTopProps = (state) => {
     return {
-        userList: state.user.userList,
-        isLoadingUserList: state.user.isLoadingUserList
+        userList: state.userList.userList,
+        isLoadingUserList: state.userList.isLoadingUserList
     };
 }
 

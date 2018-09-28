@@ -16,8 +16,8 @@ const INITIAL_STATE = {
     isLoadingUserDetail: false,
     isLoadingRepoList: false,
     isLoadingGistList: false,
-    repoList: [],
-    gistList: []
+    repoList: null,
+    gistList: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -29,17 +29,17 @@ export default (state = INITIAL_STATE, action) => {
         case LOAD_USER_DETAIL_FAIL:
             return { ...state, isLoadingUserDetail: false, userData: null };
         case LOAD_REPO_LIST:
-            return { ...state, isLoadingRepoList: true, repoList: [] };
+            return { ...state, isLoadingRepoList: true, repoList: null };
         case LOAD_REPO_LIST_SUCCESS:
             return { ...state, isLoadingRepoList: false, repoList: action.payload };
         case LOAD_REPO_LIST_FAIL:
-            return { ...state, isLoadingRepoList: false, repoList: [] };
+            return { ...state, isLoadingRepoList: false, repoList: null };
         case LOAD_GIST_LIST:
-            return { ...state, isLoadingGistList: true, gistList: [] };
+            return { ...state, isLoadingGistList: true, gistList: null };
         case LOAD_GIST_LIST_SUCCESS:
             return { ...state, isLoadingGistList: false, gistList: action.payload };
         case LOAD_GIST_LIST_FAIL:
-            return { ...state, isLoadingGistList: false, gistList: [] };
+            return { ...state, isLoadingGistList: false, gistList: null };
         default:
             return state;
     }

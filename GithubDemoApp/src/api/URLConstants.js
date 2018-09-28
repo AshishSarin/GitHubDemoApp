@@ -8,5 +8,4 @@ export const URLConstants = {
     getUserDetailUrl: BASE_URL + '/users',
     getRepoListUrl: BASE_URL + '/users',
     getGistListUrl: BASE_URL + '/users'
-
 };

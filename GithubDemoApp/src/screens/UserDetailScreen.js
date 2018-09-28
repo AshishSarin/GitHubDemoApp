@@ -7,6 +7,10 @@ import {
 import { loadUserDetail } from '../actions';
 import { UserOverview } from '../components/layouts';
 import { RepoListItem, GistListItem } from '../components/listItems';
+import {
+    ERROR_LOADING_USER_DETAIL, LOADING_MSG_USER_DETAIL,
+    LABEL_GIST_LIST, LABEL_REPOSITORY_LIST
+} from '../values/strings';
 
 class UserDetailScreen extends Component {
 
@@ -34,12 +38,12 @@ class UserDetailScreen extends Component {
         if (this.props.isLoadingUserDetail) {
             return this.renderUserLoadingIndicator();
         } else if (this.props.userData) {
-            return <ScrollView>
+            return <ScrollView style={{ paddingHorizontal: 0 }}>
                 {this.rendeUserOverview()}
                 {this.renderRepoGistList()}
             </ScrollView>
         } else {
-            return <Text>Error in loading userDetail</Text>
+            return <Text>{ERROR_LOADING_USER_DETAIL}</Text>
         }
 
     }
@@ -48,15 +52,25 @@ class UserDetailScreen extends Component {
         return (
             <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
                 <ActivityIndicator />
-                <Text>Loading user details. Please wait...</Text>
+                <Text>{LOADING_MSG_USER_DETAIL}</Text>
             </View>
         )
     }
 
     renderRepoGistList() {
+
         return (
             <View>
+                <Text style={{
+                    marginTop: 20, marginLeft: 24,
+                    fontSize: 24, color: 'black'
+                }}>{LABEL_REPOSITORY_LIST + ':'}
+                </Text>
                 {this.renderRepoList()}
+                <Text style={{
+                    marginTop: 24, marginLeft: 24,
+                    fontSize: 24, color: 'black'
+                }}>{LABEL_GIST_LIST + ':'}</Text>
                 {this.renderGistList()}
             </View>
         );
