@@ -19,3 +19,14 @@
 13. Enable USB debugging on your device
 12. Click on run app in android studio and select your device from the list
 13. Inside GithubDemoApp, also run "npm start" command.
+
+**** Screenshots ****
+
+![Alt text](https://github.com/AshishSarin/GithubDemoApp/blob/master/screenshots/IMG-20180928-WA0000.jpg?raw=true "User List")
+
+
+![Alt text](https://github.com/AshishSarin/GithubDemoApp/blob/master/screenshots/IMG-20180928-WA0001.jpg?raw=true "User List")
+
+
+![Alt text](https://github.com/AshishSarin/GithubDemoApp/blob/master/screenshots/IMG-20180928-WA0002.jpg?raw=true "User List")
+
